@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block title %} 
+    {{ post.title_tag }}
+{% endblock %}
+
+
+{% block content %}
+
+<!-- current user logged in -{{ post.writer.id }}/user id:- {{ user.id }} -->
+
+<h1>{{ post.title }}</h1>
+<h6>By:- {{ post.writer }}  </h6>
+<h5>on {{ post.publish_time }} </h5>
+<hr>
+<br>
+
+{{ post.body|safe }}
+
+<hr>
+<a href="{% url 'home' %}" class="btn btn-secondary">Go Back</a>
+{% if user.is_authenticated %}
+    {% if user.id == post.writer.id %}
+<a href="{% url 'update_post' post.pk %}" class="btn btn-secondary">Edit</a>
+<a href="{% url 'delete_post' post.pk %}" class="btn btn-secondary">Delete</a>
+    {% endif %}
+{% endif %}
+<br>
+<hr>
+<br>
+<!-- <form action="{% url 'like_post' post.pk %}"
+ method="POST">
+    {% csrf_token %}
+    <button type='submit',name="post_id", value="{{ post.id }}", class="btn btn-primary btn-sm">LIKE</button>
+    - {{ total_likes }}
+</form> -->
+{% endblock %}
